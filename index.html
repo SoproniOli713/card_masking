@@ -1,1 +1,108 @@
-mypage
+<html>
+<head>
+	<title>Card Masking Flipping Card</title>
+</head>
+	<div class="canvas"></div>
+<body>
+
+	<script type="text/javascript" src="jquery-2.1.3.min.js"></script>
+
+	<script type="text/javascript" src="phaser.js"></script>
+
+	<script type="text/javascript">
+
+		$(document).ready(function(){
+
+			var game = new Phaser.Game(1024, 768, Phaser.AUTO, 'canvas', {
+				init : init,
+				preload : preload,
+				create : create,
+				update : update
+			});
+
+			function init() {
+
+			};
+
+			function preload() {
+				game.load.image('back', '--.png');
+				game.load.image('front', 'XRC.png');
+				game.load.image('de', 'de.jpg');
+			};
+
+			function create() {
+
+				game.add.sprite(550, 100, 'de');
+
+				var cardfront = game.add.sprite(400, 250, 'front');
+					cardfront.anchor.setTo(0.5,0.5);
+
+				var cardback = game.add.sprite(150, 250, 'back');
+					cardback.anchor.setTo(0.5,0.5);
+		
+				
+				var tlx = cardback.x - (cardback.width / 2);
+				var tly = cardback.y - (cardback.height / 2);
+				var blx = tlx;
+				var bly = cardback.y + (cardback.height / 2);
+				var rtx = cardback.x + ((cardback.width / 2));
+				var rty = tly;
+				var rbx = cardback.x + (cardback.width / 2);
+				var rby = bly;
+
+				var mask = game.add.graphics(tlx, tly);
+
+					mask.beginFill(0xFF3300);
+
+				    mask.lineStyle(2, 0xffd900, 1);
+				    // draw a shape
+				    mask.lineTo(0, cardback.height - 100);
+
+				    mask.lineTo(100, cardback.height);
+
+				    mask.lineTo(cardback.width, cardback.height);
+
+				    mask.lineTo(cardback.width, 0);
+
+				    mask.endFill();
+
+					cardback.mask = mask;
+
+
+				// mask for front card
+				var draw_front = game.add.graphics(tlx, tly + (cardback.height - 100));
+					draw_front.beginFill(0xFF3300);
+					draw_front.lineStyle(2, 0xffd900, 1);
+					draw_front.lineTo(100, 0);
+					draw_front.lineTo(100, 100);
+					draw_front.endFill();
+
+
+				var txt = game.add.text(5,0, 'What i want to attain is that \n i want to draw portion of the front card \n to the orange area', {
+					font: "24px arial", 
+					fill: "#FFF", 
+					align:'right', 
+					fontWeight:'bold', 
+					anchor: '0.5,0.5'
+				});
+
+
+				var txt = game.add.text(600,50, 'Output that i want to attain', {
+					font: "24px arial", 
+					fill: "#FFF", 
+					align:'right', 
+					fontWeight:'bold', 
+					anchor: '0.5,0.5'
+				});
+
+			};
+
+			function update() {
+
+			};
+		});
+	</script>
+
+</body>
+
+</html>
